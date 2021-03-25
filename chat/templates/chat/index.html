@@ -1,0 +1,10 @@
+<html>
+<head>
+    <title>difj</title>
+</head>
+<body>
+    After connecting github to heroku we need to <ol><li>Go to core folder and in the settings files you need to set <ul><li>STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')</li><li>STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]</li><li>import os</li></ul></li><li>Having your venv activated AND INSIDE YOUR REPOSITORY, you will run in the terminal <code>pip freeze > requirements.txt</code> which will create a .txt file in the project's folder outside any app or the core. This .txt will contain the packages that you need to run this projects</li><li>Now you need to create inside the core <b>Procfile</b> without any file extension. These will be some parameters that we will pass on to Heroku. Here we are going to define the WSGI server</li><li>We need to install <code>pip install gunicorn</code> which is going to be the WSGI server that is going to hepl process our HTTP requests. REMEMBER TO UPDATE THE requirements</li><li>In Procfile you will then type <code>web: gunicorn core.wsgi</code> being core the name of our core folder of this project</li><li>Create a file called <b>runtime.txt</b> in which you will write <b>python-3.8.5</b> the python version you want to run MAYBE THIS ISNT REQUIRED</li><li>Dont forget to create the static and staticfiles folders with txt.txt in them</li><li>commit to github</li><li>Go to Heroku and now you can lcick on Deploy Branch</li><li>You wont be able to see the project, for this you need to specify in <b>settings.py</b> that <code>ALLOWED_APPS = [".herokuapp.com","127.0.0.1:8000"]</code></li></ol>
+
+</body>
+
+</html>
