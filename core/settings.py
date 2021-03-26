@@ -26,7 +26,7 @@ SECRET_KEY = 'j%kbm*0nxb17&jb#=3rxey2(@(g_v%6#n@ci)i0p5t@#w)9mt#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".herokuapp.com","127.0.0.1:8000"]
+ALLOWED_HOSTS = [".herokuapp.com","localhost"]
 
 
 # Application definition
@@ -72,7 +72,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.routing.application'
-CHANNEL_LAYERS = {"default":{"BACKEND":"channels.layers.InMemoryChannelLayer"}}
+
+# This next thing is for local development
+#CHANNEL_LAYERS = {"default":{"BACKEND":"channels.layers.InMemoryChannelLayer"}}
+CHANNEL_LAYERS = {
+    "default":{
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG":{
+            "hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379")]
+        }
+    }
+}
+# IDK WHAT THIS IS FOR
+CACHES = {
+    "default":{
+        "BACKEND":"django_redis.cache.RedisCache",
+        "LOCATION": [os.environ.get("REDIS_URL", "redis://localhost:6379")],
+        "OPTIONS":{
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}
 
 
 # Database
